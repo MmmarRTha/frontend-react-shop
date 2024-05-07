@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 
-export default function Layout() {
+export default function Register() {
   return (
     <div>
-        Layout
+        Register
         <Outlet />
     </div>
   )
