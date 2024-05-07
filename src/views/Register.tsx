@@ -71,12 +71,16 @@ export default function Register() {
                 <input 
                     type="submit" 
                     value="Create Account"
-                    className="w-full px-3 py-2 mt-5 font-bold text-white uppercase bg-blue-500 rounded-md cursor-pointer hover:bg-blue-700"
+                    className="w-full px-3 py-2 mt-5 font-bold text-white uppercase bg-green-600 rounded-md cursor-pointer hover:bg-green-700"
                 />
             </div>
         </form>
     </div>
+    <nav className="mt-5">
+            <Link to="/auth/login">
+                Sing In
+            </Link>
+        </nav>
     </>
-
   )
 }
