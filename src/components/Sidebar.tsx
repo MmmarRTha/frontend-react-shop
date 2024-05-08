@@ -12,7 +12,7 @@ export default function Sidebar() {
                 />
         </div>
 
-        <div className="mt-10">
+        <div className="px-4 mt-10">
             {categories.map( category => (
                 <Category 
                     key={category.id}    
@@ -24,7 +24,7 @@ export default function Sidebar() {
         <div className='px-5 my-5'>
             <button
                 type='button'
-                className='w-full p-3 font-bold text-center text-white bg-red-500 rounded-lg hover:bg-red-600'
+                className='w-full p-3 font-bold text-center text-white bg-red-600 rounded-lg hover:bg-red-700'
             >
                 Cancel Order
             </button>
