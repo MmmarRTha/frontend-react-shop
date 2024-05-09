@@ -1,7 +1,15 @@
+import useShop from '../hooks/useShop';
 import Category from './Category';
-import { categories } from '../data/categories';
 
-export default function Sidebar() {
+type CategotyType ={
+    slug: string;
+    name: string;
+    id: number;
+}
+
+const Sidebar: React.FC = () => {
+    const { categories } = useShop() as { categories: CategotyType[] };
+    
   return (
     <aside className="md:w-72">
         <div className="p-4">
@@ -13,7 +21,7 @@ export default function Sidebar() {
         </div>
 
         <div className="px-4 mt-10">
-            {categories.map( category => (
+            {categories.map( (category: CategotyType) => (
                 <Category 
                     key={category.id}    
                     category={category}
@@ -33,3 +41,5 @@ export default function Sidebar() {
     </aside>
   )
 }
+
+export default Sidebar;
