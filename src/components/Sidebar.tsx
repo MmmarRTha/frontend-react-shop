@@ -1,7 +1,12 @@
+import useShop from '../hooks/useShop';
 import Category from './Category';
-import { categories } from '../data/categories';
+import { CategoryT } from '../types';
+
 
 export default function Sidebar() {
+
+    const { categories } = useShop() as { categories: CategoryT[] };
+
   return (
     <aside className="md:w-72">
         <div className="p-4">
