@@ -1,17 +1,41 @@
 import { Outlet } from "react-router-dom";
+import Modal from 'react-modal';
 import Sidebar from "../components/Sidebar";
 import Summary  from "../components/Summary";
+import useShop from "../hooks/useShop";
+import ModalProduct from "../components/ModalProduct";
+
+const customStyles = {
+    content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+    },
+};
+
+Modal.setAppElement("#root");
 
 export default function Layout() {
-  return (
-    <div className="md:flex bg-gradient-to-r from-indigo-200 via-red-200 to-pink-100">
-        <Sidebar />
-        
-        <main className="flex-1 h-screen p-3 overflow-y-scroll">
-            <Outlet />
-        </main>
+    const { modal, handleClickModal } = useShop();
+    console.log(modal)
 
-        <Summary />
-    </div>
-  )
+    return (
+        <>
+            <div className="md:flex bg-gradient-to-r from-indigo-200 via-red-200 to-pink-100">
+                <Sidebar />
+                
+                <main className="flex-1 h-screen p-3 overflow-y-scroll">
+                    <Outlet />
+                </main>
+
+                <Summary />
+            </div>
+            <Modal isOpen={modal} style={customStyles}>
+                <ModalProduct />
+            </Modal>
+        </>
+    )
 }
