@@ -29,7 +29,7 @@ export default function Sidebar() {
         <div className='px-5 my-5'>
             <button
                 type='button'
-                className='w-full p-3 font-bold text-center text-white bg-red-600 rounded-lg hover:bg-red-700'
+                className='w-full p-3 text-lg font-bold text-center text-white bg-red-400 rounded-lg hover:bg-red-500'
             >
                 Cancel Order
             </button>

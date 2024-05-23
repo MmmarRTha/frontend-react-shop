@@ -1,4 +1,4 @@
-import { products } from '../data/products';
+import { products as data } from '../data/products';
 import { CategoryT } from '../types';
 import Product from '../components/Product';
 import useShop from '../hooks/useShop';
@@ -6,6 +6,7 @@ import useShop from '../hooks/useShop';
 export default function Home() {
 
     const { actualCategory } = useShop() as { actualCategory: CategoryT };
+    const products = data.filter( product => product.categoryId === actualCategory.id);
 
   return (
     <>
