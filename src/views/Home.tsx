@@ -1,11 +1,16 @@
-import { products } from '../data/products';
+import { products as data } from '../data/products';
+import { CategoryT } from '../types';
 import Product from '../components/Product';
+import useShop from '../hooks/useShop';
 
 export default function Home() {
-    console.log(products);
+
+    const { actualCategory } = useShop() as { actualCategory: CategoryT };
+    const products = data.filter( product => product.categoryId === actualCategory.id);
+
   return (
     <>
-    <h1 className='text-4xl font-bold'>Home</h1>
+    <h1 className='text-4xl font-bold'>{actualCategory.name}</h1>
     <p className='my-10 text-2xl'>Choose and personalize your order here</p>
 
     <div>

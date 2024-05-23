@@ -1,25 +1,9 @@
-export const products = [
-    {
-        name: "Café Caramel con Chocolate",
-        price: 59.9,
-        image: "cafe_01",
-        categoryId: 1,
-        id: 1
-      },
-      {
-        name: "Café Frio con Chocolate Grande",
-        price: 49.9,
-        image: "cafe_02",
-        categoryId: 1,
-        id: 2
-      },
-      {
-        name: "Latte Frio con Chocolate Grande",
-        price: 54.9,
-        image: "cafe_03",
-        categoryId: 1,
-        id: 3
-      },
+import { ProductT } from "../types";
+
+export const products : ProductT[] = [
+    { name: "Café Caramel con Chocolate", price: 59.9, image: "cafe_01", categoryId: 1, id: 1 },
+    { name: "Café Frio con Chocolate Grande", price: 49.9, image: "cafe_02", categoryId: 1, id: 2 },
+    { name: "Latte Frio con Chocolate Grande", price: 54.9, image: "cafe_03", categoryId: 1, id: 3 },
       {
         name: "Latte Frio con Chocolate Grande",
         price: 54.9,
