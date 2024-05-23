@@ -3,3 +3,11 @@ export type CategoryT = {
     name: string;
     slug: string;
 }
+
+export type ProductT = {
+    name: string;
+    price: number;
+    image: string;
+    categoryId: number;
+    id: number;
+};
