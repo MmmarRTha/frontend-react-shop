@@ -10,6 +10,7 @@ type ShopContextProps = {
     handleClickModal: () => void;
     product: ProductT;
     handleSetProduct: (product: ProductT) => void;
+    order: ProductT[];
 }
 
 type ShopProviderProps = {
@@ -22,6 +23,7 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
     const [actualCategory, setActualCategory] = useState(categories[0]);
     const [modal, setModal] = useState(false);
     const [product, setProduct] = useState({} as ProductT)
+    const [order, setOrder] = useState([] as ProductT[])
 
     const handleClickCategory = (id: number) => {
         const category = categories.filter( category => category.id === id )[0]
@@ -45,7 +47,8 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
                 modal,
                 handleClickModal,
                 product,
-                handleSetProduct
+                handleSetProduct,
+                order
             }}
         >
             {children}
