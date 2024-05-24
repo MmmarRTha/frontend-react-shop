@@ -11,3 +11,8 @@ export type ProductT = {
     categoryId: number;
     id: number;
 };
+
+export type OrderItem = Pick<ProductT, 'id' | 'name' | 'price'> & {
+    quantity: number
+    // subtotal: number
+} 

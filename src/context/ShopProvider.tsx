@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useState } from 'react'
 import { categories as categoriesDB} from '../data/categories'
-import { CategoryT, ProductT } from '../types';
+import { CategoryT, OrderItem, ProductT } from '../types';
 
 type ShopContextProps = {
     categories: CategoryT[];
@@ -10,7 +10,8 @@ type ShopContextProps = {
     handleClickModal: () => void;
     product: ProductT;
     handleSetProduct: (product: ProductT) => void;
-    order: ProductT[];
+    order: OrderItem[];
+    handleAddOrder: (product: OrderItem) => void;
 }
 
 type ShopProviderProps = {
@@ -23,7 +24,7 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
     const [actualCategory, setActualCategory] = useState(categories[0]);
     const [modal, setModal] = useState(false);
     const [product, setProduct] = useState({} as ProductT)
-    const [order, setOrder] = useState([] as ProductT[])
+    const [order, setOrder] = useState([] as OrderItem[])
 
     const handleClickCategory = (id: number) => {
         const category = categories.filter( category => category.id === id )[0]
@@ -38,6 +39,10 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
         setProduct(product)
     }
 
+    const handleAddOrder = ( product: OrderItem) => {
+        setOrder([...order, product])
+    }
+
     return (
         <ShopContext.Provider 
             value={{
@@ -48,7 +53,8 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
                 handleClickModal,
                 product,
                 handleSetProduct,
-                order
+                order,
+                handleAddOrder
             }}
         >
             {children}
