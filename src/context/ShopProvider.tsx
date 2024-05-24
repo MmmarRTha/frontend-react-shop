@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useEffect, useState } from 'react'
-import { categories as categoriesDB} from '../data/categories'
 import { CategoryT, OrderItem, ProductT } from '../types';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 type ShopContextProps = {
     categories: CategoryT[];
@@ -24,8 +24,8 @@ type ShopProviderProps = {
 export const ShopContext = createContext<ShopContextProps>(null!)
 
 export const ShopProvider = ({ children, }: ShopProviderProps) => {
-    const [categories] = useState(categoriesDB);
-    const [actualCategory, setActualCategory] = useState(categories[0]);
+    const [categories, setCategories] = useState<CategoryT[]>([]);
+    const [actualCategory, setActualCategory] = useState({} as CategoryT);
     const [modal, setModal] = useState(false);
     const [product, setProduct] = useState({} as ProductT)
     const [order, setOrder] = useState([] as OrderItem[])
@@ -35,6 +35,20 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
         const newTotal = order.reduce( (total, product) => (product.price * product.quantity) + total, 0)
         setTotal(newTotal)
     }, [order])
+
+    const getCategories = async () => {
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/categories`)
+            setCategories(data.data)
+            setActualCategory(data.data[0])
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => {
+        getCategories()
+    }, [])
 
     const handleClickCategory = (id: number) => {
         const category = categories.filter( category => category.id === id )[0]
