@@ -4,6 +4,7 @@ import OrderSummary from "./OrderSummary";
 
 export default function Summary() {
     const  { order, total } = useShop();
+    const checkOrder = order.length === 0;
 
     return (
         <aside className="h-screen p-5 overflow-y-scroll w-72">
@@ -26,7 +27,7 @@ export default function Summary() {
                     ))
                 )}
             </div>
-            <p className="mt-10 text-xl">
+            <p className="mt-10 text-xl font-semibold">
                 Total: {''}
                 {formatCurrency(total)}
             </p>
@@ -34,8 +35,9 @@ export default function Summary() {
                 <div className="mt-5">
                     <input 
                         type="submit"
-                        className="w-full p-3 mt-5 font-bold text-white uppercase duration-300 bg-indigo-500 rounded-lg cursor-pointer hover:-translate-y-1 hover:scale-110 hover:bg-indigo-400"
-                        value="Confirm Order" 
+                        className={`${checkOrder ? 'bg-indigo-200' : 'bg-indigo-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-400'} w-full p-3 mt-5 font-bold text-white uppercase duration-300 rounded-lg cursor-pointer `}
+                        value="Confirm Order"
+                        disabled={checkOrder} 
                     />
                 </div>
             </form>
