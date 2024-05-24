@@ -1,8 +1,9 @@
 import useShop from "../hooks/useShop"
+import { formatCurrency } from "../utils";
 import OrderSummary from "./OrderSummary";
 
 export default function Summary() {
-    const  { order } = useShop();
+    const  { order, total } = useShop();
 
     return (
         <aside className="h-screen p-5 overflow-y-scroll w-72">
@@ -27,6 +28,7 @@ export default function Summary() {
             </div>
             <p className="mt-10 text-xl">
                 Total: {''}
+                {formatCurrency(total)}
             </p>
             <form className="w-full">
                 <div className="mt-5">

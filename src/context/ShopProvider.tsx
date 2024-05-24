@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useEffect, useState } from 'react'
 import { categories as categoriesDB} from '../data/categories'
 import { CategoryT, OrderItem, ProductT } from '../types';
 import { toast } from 'react-toastify';
@@ -15,6 +15,7 @@ type ShopContextProps = {
     handleAddOrder: (product: OrderItem) => void;
     handleEditQuantity: (id: number) => void;
     handleDeleteProductOrder: (id: number) => void;
+    total: number;
 }
 
 type ShopProviderProps = {
@@ -29,6 +30,12 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
     const [product, setProduct] = useState({} as ProductT)
     const [order, setOrder] = useState([] as OrderItem[])
     const [editProduct, setEditProduct] = useState([] as ProductT[])
+    const [total, setTotal] = useState(0)
+
+    useEffect(() => {
+        const newTotal = order.reduce( (total, product) => (product.price * product.quantity) + total, 0)
+        setTotal(newTotal)
+    }, [order])
 
     const handleClickCategory = (id: number) => {
         const category = categories.filter( category => category.id === id )[0]
@@ -79,7 +86,8 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
                 order,
                 handleAddOrder,
                 handleEditQuantity,
-                handleDeleteProductOrder
+                handleDeleteProductOrder,
+                total
             }}
         >
             {children}
