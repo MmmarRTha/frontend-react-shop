@@ -11,3 +11,8 @@ export type ProductT = {
     categoryId: number;
     id: number;
 };
+
+export type OrderItem = ProductT & {
+    quantity: number
+    // subtotal: number
+} 

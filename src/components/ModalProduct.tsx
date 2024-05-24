@@ -1,13 +1,22 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import useShop from '../hooks/useShop';
 import { formatCurrency } from '../utils';
 
 export default function ModalProduct() {
-    const { product, handleClickModal } = useShop();
+    const { product, handleClickModal, handleAddOrder, order } = useShop();
     const [quantity, setQuantity] = useState(1);
+    const [edit, setEdit] = useState(false);
+
+    useEffect(() => {
+        if(order.some(orderState => orderState.id === product.id)) {
+            const editOrder = order.filter(orderState => orderState.id === product.id)[0]
+            setQuantity(editOrder.quantity)
+            setEdit(true)
+        }
+    }, [order])
 
     return (
-        <div className="gap-10 md:flex bg-gradient-to-l from-pink-300 via-purple-300 to-indigo-">
+        <div className="gap-10 md:flex bg-gradient-to-l from-pink-300 via-purple-200 to-indigo-">
             <div className="md:w-1/3">
                 <img
                     src={`img/products/${product.image}.jpg`} 
@@ -38,7 +47,7 @@ export default function ModalProduct() {
                             setQuantity(quantity - 1)
                         }}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="orange" className="size-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="deepskyblue" className="size-6">
                             <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clipRule="evenodd" />
                         </svg>
                     </button>
@@ -50,7 +59,7 @@ export default function ModalProduct() {
                             setQuantity(quantity + 1)
                         }}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="orange" className="size-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="deepskyblue" className="size-6">
                             <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clipRule="evenodd" />
                         </svg>
                     </button>
@@ -59,8 +68,12 @@ export default function ModalProduct() {
                 <button
                     type='button'
                     className='px-5 py-3 mt-5 font-bold text-white uppercase bg-pink-500 rounded-md hover:bg-pink-700' 
+                    onClick={() => {
+                        handleAddOrder({...product, quantity})
+                        handleClickModal()
+                    }}
                 >
-                    Add to Order
+                   { edit ? 'Save Changes' : 'Add to Order'}
                 </button>
             </div>
         </div>

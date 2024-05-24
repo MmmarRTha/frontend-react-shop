@@ -4,6 +4,8 @@ import Sidebar from "../components/Sidebar";
 import Summary  from "../components/Summary";
 import useShop from "../hooks/useShop";
 import ModalProduct from "../components/ModalProduct";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const customStyles = {
     content: {
@@ -19,8 +21,7 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function Layout() {
-    const { modal, handleClickModal } = useShop();
-    console.log(modal)
+    const { modal } = useShop();
 
     return (
         <>
@@ -36,6 +37,8 @@ export default function Layout() {
             <Modal isOpen={modal} style={customStyles}>
                 <ModalProduct />
             </Modal>
+
+            <ToastContainer />
         </>
     )
 }

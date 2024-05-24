@@ -1,6 +1,7 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useEffect, useState } from 'react'
 import { categories as categoriesDB} from '../data/categories'
-import { CategoryT, ProductT } from '../types';
+import { CategoryT, OrderItem, ProductT } from '../types';
+import { toast } from 'react-toastify';
 
 type ShopContextProps = {
     categories: CategoryT[];
@@ -10,6 +11,11 @@ type ShopContextProps = {
     handleClickModal: () => void;
     product: ProductT;
     handleSetProduct: (product: ProductT) => void;
+    order: OrderItem[];
+    handleAddOrder: (product: OrderItem) => void;
+    handleEditQuantity: (id: number) => void;
+    handleDeleteProductOrder: (id: number) => void;
+    total: number;
 }
 
 type ShopProviderProps = {
@@ -22,6 +28,14 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
     const [actualCategory, setActualCategory] = useState(categories[0]);
     const [modal, setModal] = useState(false);
     const [product, setProduct] = useState({} as ProductT)
+    const [order, setOrder] = useState([] as OrderItem[])
+    const [editProduct, setEditProduct] = useState([] as ProductT[])
+    const [total, setTotal] = useState(0)
+
+    useEffect(() => {
+        const newTotal = order.reduce( (total, product) => (product.price * product.quantity) + total, 0)
+        setTotal(newTotal)
+    }, [order])
 
     const handleClickCategory = (id: number) => {
         const category = categories.filter( category => category.id === id )[0]
@@ -36,6 +50,29 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
         setProduct(product)
     }
 
+    const handleAddOrder = ( product: OrderItem) => {
+        if(order.some(orderState => orderState.id === product.id)) {
+            const orderUpdated = order.map(orderState => orderState.id === product.id ? product : orderState)
+            setOrder(orderUpdated)
+            toast.success('Your changes have been saved')
+        } else {
+            setOrder([...order, product])
+            toast.success('Product added to your order')
+        }
+    }
+
+    const handleEditQuantity = (id: number) => {
+        const updateProduct = order.filter(editProduct => editProduct.id === id)[0]
+        setProduct(updateProduct)
+        setModal(!modal)
+    }
+
+    const handleDeleteProductOrder = (id: number) => {
+        const UpdatedOrder = order.filter(editProduct => editProduct.id !== id)
+        setOrder(UpdatedOrder)
+        toast.error('Product removed from your order')
+    }
+
     return (
         <ShopContext.Provider 
             value={{
@@ -45,7 +82,12 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
                 modal,
                 handleClickModal,
                 product,
-                handleSetProduct
+                handleSetProduct,
+                order,
+                handleAddOrder,
+                handleEditQuantity,
+                handleDeleteProductOrder,
+                total
             }}
         >
             {children}
