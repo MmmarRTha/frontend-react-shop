@@ -24,12 +24,11 @@ type ShopProviderProps = {
 export const ShopContext = createContext<ShopContextProps>(null!)
 
 export const ShopProvider = ({ children, }: ShopProviderProps) => {
-    const [categories, setCategories] = useState(categoriesDB);
+    const [categories] = useState(categoriesDB);
     const [actualCategory, setActualCategory] = useState(categories[0]);
     const [modal, setModal] = useState(false);
     const [product, setProduct] = useState({} as ProductT)
     const [order, setOrder] = useState([] as OrderItem[])
-    const [editProduct, setEditProduct] = useState([] as ProductT[])
     const [total, setTotal] = useState(0)
 
     useEffect(() => {
