@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useState } from 'react'
 import { categories as categoriesDB} from '../data/categories'
 import { CategoryT, OrderItem, ProductT } from '../types';
+import { toast } from 'react-toastify';
 
 type ShopContextProps = {
     categories: CategoryT[];
@@ -12,6 +13,7 @@ type ShopContextProps = {
     handleSetProduct: (product: ProductT) => void;
     order: OrderItem[];
     handleAddOrder: (product: OrderItem) => void;
+    handleEditQuantity: (id: number) => void;
 }
 
 type ShopProviderProps = {
@@ -25,6 +27,7 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
     const [modal, setModal] = useState(false);
     const [product, setProduct] = useState({} as ProductT)
     const [order, setOrder] = useState([] as OrderItem[])
+    const [editProduct, setEditProduct] = useState([] as ProductT[])
 
     const handleClickCategory = (id: number) => {
         const category = categories.filter( category => category.id === id )[0]
@@ -40,7 +43,20 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
     }
 
     const handleAddOrder = ( product: OrderItem) => {
-        setOrder([...order, product])
+        if(order.some(orderState => orderState.id === product.id)) {
+            const orderUpdated = order.map(orderState => orderState.id === product.id ? product : orderState)
+            setOrder(orderUpdated)
+            toast.success('Your changes have been saved!')
+        } else {
+            setOrder([...order, product])
+            toast.success('Product added to Order!')
+        }
+    }
+
+    const handleEditQuantity = (id: number) => {
+        const updateProduct = order.filter(editProduct => editProduct.id === id)[0]
+        setProduct(updateProduct)
+        setModal(!modal)
     }
 
     return (
@@ -54,7 +70,8 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
                 product,
                 handleSetProduct,
                 order,
-                handleAddOrder
+                handleAddOrder,
+                handleEditQuantity
             }}
         >
             {children}

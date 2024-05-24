@@ -12,7 +12,7 @@ export type ProductT = {
     id: number;
 };
 
-export type OrderItem = Pick<ProductT, 'id' | 'name' | 'price'> & {
+export type OrderItem = ProductT & {
     quantity: number
     // subtotal: number
 } 

@@ -1,10 +1,19 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import useShop from '../hooks/useShop';
 import { formatCurrency } from '../utils';
 
 export default function ModalProduct() {
-    const { product, handleClickModal, handleAddOrder, } = useShop();
+    const { product, handleClickModal, handleAddOrder, order } = useShop();
     const [quantity, setQuantity] = useState(1);
+    const [edit, setEdit] = useState(false);
+
+    useEffect(() => {
+        if(order.some(orderState => orderState.id === product.id)) {
+            const editOrder = order.filter(orderState => orderState.id === product.id)[0]
+            setQuantity(editOrder.quantity)
+            setEdit(true)
+        }
+    }, [order])
 
     return (
         <div className="gap-10 md:flex bg-gradient-to-l from-pink-300 via-purple-200 to-indigo-">
@@ -60,16 +69,11 @@ export default function ModalProduct() {
                     type='button'
                     className='px-5 py-3 mt-5 font-bold text-white uppercase bg-pink-500 rounded-md hover:bg-pink-700' 
                     onClick={() => {
-                        handleAddOrder({
-                            id: product.id,
-                            name: product.name,
-                            price: product.price,
-                            quantity
-                        })
+                        handleAddOrder({...product, quantity})
                         handleClickModal()
                     }}
                 >
-                    Add to Order
+                   { edit ? 'Save Changes' : 'Add to Order'}
                 </button>
             </div>
         </div>

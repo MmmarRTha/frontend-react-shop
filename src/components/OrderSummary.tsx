@@ -1,3 +1,4 @@
+import useShop from '../hooks/useShop';
 import { OrderItem } from '../types'
 import { formatCurrency } from '../utils';
 
@@ -6,6 +7,8 @@ type OrderSummaryProps = {
 }
 
 export default function OrderSummary({product} : OrderSummaryProps) {
+
+    const { handleEditQuantity } = useShop();
 
     return (
         <div className="p-4 space-y-1 border rounded-md shadow-xl bg-slate-50">
@@ -24,6 +27,7 @@ export default function OrderSummary({product} : OrderSummaryProps) {
                 <button
                     type="button"
                     className="p-2 font-bold text-center text-white uppercase bg-indigo-700 rounded-md shadow-md hover:bg-indigo-500"
+                    onClick={() => handleEditQuantity(product.id)}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
