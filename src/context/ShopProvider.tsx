@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useEffect, useState } from 'react'
 import { CategoryT, OrderItem, ProductT } from '../types';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axiosClient from '../config/axios';
 
 type ShopContextProps = {
     categories: CategoryT[];
@@ -38,7 +38,7 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
 
     const getCategories = async () => {
         try {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/categories`)
+            const { data } = await axiosClient('/api/categories')
             setCategories(data.data)
             setActualCategory(data.data[0])
         } catch (error) {
