@@ -14,6 +14,7 @@ type ShopContextProps = {
     order: OrderItem[];
     handleAddOrder: (product: OrderItem) => void;
     handleEditQuantity: (id: number) => void;
+    handleDeleteProductOrder: (id: number) => void;
 }
 
 type ShopProviderProps = {
@@ -46,10 +47,10 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
         if(order.some(orderState => orderState.id === product.id)) {
             const orderUpdated = order.map(orderState => orderState.id === product.id ? product : orderState)
             setOrder(orderUpdated)
-            toast.success('Your changes have been saved!')
+            toast.success('Your changes have been saved')
         } else {
             setOrder([...order, product])
-            toast.success('Product added to Order!')
+            toast.success('Product added to your order')
         }
     }
 
@@ -57,6 +58,12 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
         const updateProduct = order.filter(editProduct => editProduct.id === id)[0]
         setProduct(updateProduct)
         setModal(!modal)
+    }
+
+    const handleDeleteProductOrder = (id: number) => {
+        const UpdatedOrder = order.filter(editProduct => editProduct.id !== id)
+        setOrder(UpdatedOrder)
+        toast.error('Product removed from your order')
     }
 
     return (
@@ -71,7 +78,8 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
                 handleSetProduct,
                 order,
                 handleAddOrder,
-                handleEditQuantity
+                handleEditQuantity,
+                handleDeleteProductOrder
             }}
         >
             {children}

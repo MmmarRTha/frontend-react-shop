@@ -8,7 +8,7 @@ type OrderSummaryProps = {
 
 export default function OrderSummary({product} : OrderSummaryProps) {
 
-    const { handleEditQuantity } = useShop();
+    const { handleEditQuantity, handleDeleteProductOrder } = useShop();
 
     return (
         <div className="p-4 space-y-1 border rounded-md shadow-xl bg-slate-50">
@@ -41,6 +41,7 @@ export default function OrderSummary({product} : OrderSummaryProps) {
                 <button
                     type="button"
                     className="p-2 font-bold text-center text-white uppercase bg-red-600 rounded-md shadow-md hover:bg-red-400"
+                    onClick={() => handleDeleteProductOrder(product.id)}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
