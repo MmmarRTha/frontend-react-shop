@@ -45,7 +45,7 @@ export default function Login() {
                     />
             </form>
         </div>
-        <nav className="mt-5">
+        <nav className="px-2 py-2 mt-6 font-bold text-center text-white uppercase bg-pink-500 rounded-md md:w-2/4 hover:bg-pink-700">
             <Link to="/auth/register">
                 Create Account
             </Link>
