@@ -1,12 +1,19 @@
-import { products as data } from '../data/products';
-import { CategoryT } from '../types';
+import useSWR from 'swr';
+import { CategoryT, ProductT } from '../types';
 import Product from '../components/Product';
 import useShop from '../hooks/useShop';
+import axiosClient from '../config/axios';
 
 export default function Home() {
 
     const { actualCategory } = useShop() as { actualCategory: CategoryT };
-    const products = data.filter( product => product.categoryId === actualCategory.id);
+
+    const fetcher = () => axiosClient('/api/products').then(data => data.data);
+    const { data, error, isLoading } = useSWR('/api/products', fetcher,{ refreshInterval: 1000 });
+
+    if (error) return <div>failed to load</div>;
+    if (isLoading) return 'Loading...';
+    const products: ProductT[] = data.data.filter((product: ProductT) => product.categoryId === actualCategory.id);
 
   return (
     <>
