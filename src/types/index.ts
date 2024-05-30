@@ -16,3 +16,9 @@ export type OrderItem = ProductT & {
     quantity: number
     // subtotal: number
 } 
+
+export type User = {
+    name: string
+    email: string
+    password: string
+}
