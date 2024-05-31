@@ -6,6 +6,7 @@ import useShop from "../hooks/useShop";
 import ModalProduct from "../components/ModalProduct";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from "../hooks/useAuth";
 
 const customStyles = {
     content: {
@@ -21,6 +22,7 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export default function Layout() {
+    useAuth('auth', '/');
     const { modal } = useShop();
 
     return (
