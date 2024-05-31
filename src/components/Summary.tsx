@@ -1,10 +1,17 @@
+import { useAuth } from "../hooks/useAuth";
 import useShop from "../hooks/useShop"
 import { formatCurrency } from "../utils";
 import OrderSummary from "./OrderSummary";
 
 export default function Summary() {
-    const  { order, total } = useShop();
+    const  { order, total, handleSubmitNewOrder } = useShop();
+    const { logout } = useAuth('guest', '/');
     const checkOrder = order.length === 0;
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        handleSubmitNewOrder(logout);
+    }
 
     return (
         <aside className="h-screen p-5 overflow-y-scroll w-72">
@@ -31,7 +38,10 @@ export default function Summary() {
                 Total: {''}
                 {formatCurrency(total)}
             </p>
-            <form className="w-full">
+            <form 
+                className="w-full"
+                onSubmit={handleSubmit}
+            >
                 <div className="mt-5">
                     <input 
                         type="submit"

@@ -16,6 +16,7 @@ type ShopContextProps = {
     handleEditQuantity: (id: number) => void;
     handleDeleteProductOrder: (id: number) => void;
     total: number;
+    handleSubmitNewOrder: (logout: () => void) => Promise<void>;
 }
 
 type ShopProviderProps = {
@@ -86,6 +87,36 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
         toast.error('Product removed from your order')
     }
 
+    const handleSubmitNewOrder = async (logout: () => void): Promise<void> => {
+        const token: string | null = localStorage.getItem('AUTH_TOKEN');
+        try {
+            const { data } = await axiosClient.post('/api/orders', 
+            {
+                total,
+                products: order.map(product => ({
+                    id: product.id,
+                    quantity: product.quantity
+                }))
+            }, 
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            toast.success(data.message);
+            setTimeout(() => {
+                setOrder([])
+            }, 1000)
+
+            setTimeout(() => {
+                localStorage.removeItem('AUTH_TOKEN');
+                logout();
+            }, 3000);
+        } catch (error: any) {
+            console.log(error)
+        }
+    }
+
     return (
         <ShopContext.Provider 
             value={{
@@ -100,7 +131,8 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
                 handleAddOrder,
                 handleEditQuantity,
                 handleDeleteProductOrder,
-                total
+                total,
+                handleSubmitNewOrder
             }}
         >
             {children}
