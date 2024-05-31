@@ -1,7 +1,7 @@
 import { createRef, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosClient from "../config/axios";
 import Alert from "../components/Alert";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Register() {
     const nameRef = createRef<HTMLInputElement>();
@@ -10,21 +10,18 @@ export default function Register() {
     const passwordConfirmationRef = createRef<HTMLInputElement>();
 
     const [errors, setErrors] = useState<any>([]);
+    const { register } = useAuth('guest', '/');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const data = {
+        const registerData = {
             name: nameRef.current?.value,
             email: emailRef.current?.value,
             password: passwordRef.current?.value,
             password_confirmation: passwordConfirmationRef.current?.value,
         }
-        try {
-            await axiosClient.post('/api/register', data);
-        } catch (error: any) {
-            setErrors(Object.values(error.response.data.errors) );   
-        }
+        register(registerData, setErrors);
     }
 
     return (
