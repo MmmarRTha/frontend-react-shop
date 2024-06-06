@@ -14,7 +14,7 @@ export const useAuth = (middleware : string, url: string) => {
     const token = localStorage.getItem('AUTH_TOKEN');
     const navigate = useNavigate();
 
-    const {data: user, error, mutate} = useSWR('https://backend-shop-three.vercel.app/api/api/user', () =>
+    const {data: user, error, mutate} = useSWR('/api/user', () =>
         axiosClient('https://backend-shop-three.vercel.app/api/api/user', {
             headers: {
                 Authorization: `Bearer ${token}`
