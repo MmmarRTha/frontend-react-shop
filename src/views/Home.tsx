@@ -8,8 +8,8 @@ export default function Home() {
 
     const { actualCategory } = useShop() as { actualCategory: CategoryT };
 
-    const fetcher = () => axiosClient('/api/products').then(data => data.data);
-    const { data, error, isLoading } = useSWR('/api/products', fetcher,{ refreshInterval: 1000 });
+    const fetcher = () => axiosClient('https://backend-shop-three.vercel.app/api/api/products').then(data => data.data);
+    const { data, error, isLoading } = useSWR('https://backend-shop-three.vercel.app/api/api/products', fetcher,{ refreshInterval: 1000 });
 
     if (error) return <div>failed to load</div>;
     if (isLoading) return 'Loading...';
