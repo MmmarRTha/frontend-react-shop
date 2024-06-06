@@ -10,7 +10,7 @@ export default function Register() {
     const passwordConfirmationRef = createRef<HTMLInputElement>();
 
     const [errors, setErrors] = useState<any>([]);
-    const { register } = useAuth('guest', '/');
+    const { register } = useAuth('guest', '/auth/login');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

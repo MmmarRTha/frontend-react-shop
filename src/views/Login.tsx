@@ -9,7 +9,7 @@ export default function Login() {
     const passwordRef = createRef<HTMLInputElement>();
 
     const [errors, setErrors] = useState<any>([]);
-    const {login} = useAuth('guest', '/');
+    const {login} = useAuth('guest', '/auth/login');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
