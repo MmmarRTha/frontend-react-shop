@@ -22,7 +22,7 @@ export const useAuth = (middleware : string, url: string) => {
         })
         .then(res => res.data)
         .catch(error => {
-            throw Error(error?.response?.data?.message)
+            throw Error(error?.response?.data?.errors)
         })
     )
 
