@@ -15,7 +15,7 @@ export const useAuth = (middleware : string, url: string) => {
     const navigate = useNavigate();
 
     const {data: user, error, mutate} = useSWR('/api/user', () =>
-        axiosClient('https://backend-shop-three.vercel.app/api/api/user', {
+        axiosClient('/api/user', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -28,7 +28,8 @@ export const useAuth = (middleware : string, url: string) => {
 
     const login = async (loginData: LoginDataProps, setErrors: (arg0: unknown[]) => void) => {
         try {
-            const {data} = await axiosClient.post('https://backend-shop-three.vercel.app/api/api/login', loginData);
+            const {data} = await axiosClient.post('/api/login', loginData);
+            console.log("DATA:", data);
             localStorage.setItem('AUTH_TOKEN', data.token);
             setErrors([]);
             await mutate();
@@ -39,7 +40,7 @@ export const useAuth = (middleware : string, url: string) => {
 
     const register = async (registerData: User, setErrors: (arg0: unknown[]) => void) => {
         try {
-            const {data} = await axiosClient.post('https://backend-shop-three.vercel.app/api/api/register', registerData);
+            const {data} = await axiosClient.post('/api/register', registerData);
             localStorage.setItem('AUTH_TOKEN', data.token);
             setErrors([]);
             await mutate();
@@ -50,7 +51,7 @@ export const useAuth = (middleware : string, url: string) => {
 
     const logout = async () => {
         try {
-            await axiosClient.post('https://backend-shop-three.vercel.app/api/api/logout', null, {
+            await axiosClient.post('/api/logout', null, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -64,6 +65,7 @@ export const useAuth = (middleware : string, url: string) => {
 
     useEffect(() => {
         if (middleware === 'guest' && url && user) {
+            console.log("USEeFFECT", middleware, url, user);
             navigate(url)
         }
         if (middleware === 'auth' && error) {
