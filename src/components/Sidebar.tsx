@@ -41,7 +41,7 @@ return (
                 className='w-full p-3 text-lg font-bold text-center text-white bg-red-400 rounded-lg hover:bg-red-500'
                 onClick={logout}
             >
-                Cancel Order
+                Cancel Order & Exit
             </button>
         </div>
         

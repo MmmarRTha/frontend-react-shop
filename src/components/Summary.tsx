@@ -46,7 +46,7 @@ export default function Summary() {
                     <input 
                         type="submit"
                         className={`${checkOrder ? 'bg-indigo-200' : 'bg-indigo-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-400'} w-full p-3 mt-5 font-bold text-white uppercase duration-300 rounded-lg cursor-pointer `}
-                        value="Confirm Order"
+                        value="Confirm Order & Exit"
                         disabled={checkOrder} 
                     />
                 </div>
