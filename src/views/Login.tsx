@@ -11,8 +11,6 @@ export default function Login() {
     const [errors, setErrors] = useState<any>([]);
     const {login} = useAuth('guest', '/');
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -22,11 +20,6 @@ export default function Login() {
         }
         
         login(loginData, setErrors);
-        if (errors.length > 0) {
-            setTimeout(() => {
-                setIsLoading(true);
-            }, 6000);
-        }
     }
     
   return (
@@ -74,7 +67,7 @@ export default function Login() {
                 </div>
                     <input 
                         type="submit" 
-                        value={isLoading ? 'Loading ...' : 'Sign In'}
+                        value="Sign In"
                         className="w-full px-3 py-2 mt-5 font-bold text-white uppercase bg-green-600 rounded-md cursor-pointer hover:bg-green-700"
                     />
             </form>
