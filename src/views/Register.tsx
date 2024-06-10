@@ -11,6 +11,7 @@ export default function Register() {
 
     const [errors, setErrors] = useState<any>([]);
     const { register } = useAuth('guest', '/auth/login');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,7 +22,14 @@ export default function Register() {
             password: passwordRef.current?.value,
             password_confirmation: passwordConfirmationRef.current?.value,
         }
-        register(registerData, setErrors);
+        await register(registerData, (newErrors: any) => {
+            setErrors(newErrors);
+            if (newErrors.length === 0) {
+                setIsLoading(true);
+            } else {
+                setTimeout(() => setIsLoading(false), 8000);
+            }
+        });
     }
 
     return (
@@ -102,7 +110,8 @@ export default function Register() {
                         <input 
                             type="submit" 
                             value="Create Account"
-                            className="w-full px-3 py-2 mt-5 font-bold text-white uppercase bg-green-600 rounded-md cursor-pointer hover:bg-green-700"
+                            className={`w-full px-3 py-2 mt-5 font-bold text-white uppercase rounded-md cursor-pointer ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}`}
+                            disabled={isLoading} 
                         />
                     </div>
                 </form>
