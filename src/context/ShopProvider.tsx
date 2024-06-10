@@ -39,7 +39,7 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
 
     const getCategories = async () => {
         try {
-            const { data } = await axiosClient('https://backend-shop-three.vercel.app/api/api/categories')
+            const { data } = await axiosClient('https://wedvesu.nyc.dom.my.id/api/categories')
             setCategories(data.data)
             setActualCategory(data.data[0])
         } catch (error) {
@@ -90,7 +90,7 @@ export const ShopProvider = ({ children, }: ShopProviderProps) => {
     const handleSubmitNewOrder = async (logout: () => void): Promise<void> => {
         const token: string | null = localStorage.getItem('AUTH_TOKEN');
         try {
-            const { data } = await axiosClient.post('https://backend-shop-three.vercel.app/api/api/orders', 
+            const { data } = await axiosClient.post('https://wedvesu.nyc.dom.my.id/api/orders', 
             {
                 total,
                 products: order.map(product => ({

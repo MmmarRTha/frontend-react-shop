@@ -9,8 +9,8 @@ export default function Home() {
 
     const { actualCategory } = useShop() as { actualCategory: CategoryT };
 
-    const fetcher = () => axiosClient('https://backend-shop-three.vercel.app/api/api/products').then(data => data.data);
-    const { data, error, isLoading } = useSWR('https://backend-shop-three.vercel.app/api/api/products', fetcher);
+    const fetcher = () => axiosClient('https://wedvesu.nyc.dom.my.id/api/products').then(data => data.data);
+    const { data, error, isLoading } = useSWR('https://wedvesu.nyc.dom.my.id/api/products', fetcher);
 
     if (error) return <div>failed to load</div>;
     if(isLoading) return <Loading />;
