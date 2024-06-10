@@ -15,7 +15,7 @@ export const useAuth = (middleware : string, url: string) => {
     const navigate = useNavigate();
 
     const {data: user, error, mutate} = useSWR('/api/user', () =>
-        axiosClient('https://wedvesu.nyc.dom.my.id/api/api/user', {
+        axiosClient('https://wedvesu.nyc.dom.my.id/api/user', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
