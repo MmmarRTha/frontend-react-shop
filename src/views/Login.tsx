@@ -16,18 +16,17 @@ export default function Login() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        setIsLoading(true);
-
         const loginData = {
             email: emailRef.current?.value,
             password: passwordRef.current?.value,
         }
         
         login(loginData, setErrors);
-
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 6000);
+        if (errors.length > 0) {
+            setTimeout(() => {
+                setIsLoading(true);
+            }, 6000);
+        }
     }
     
   return (
