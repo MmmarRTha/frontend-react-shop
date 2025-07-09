@@ -9,8 +9,8 @@ export default function Home() {
 
     const { actualCategory } = useShop() as { actualCategory: CategoryT };
 
-    const fetcher = () => axiosClient('https://wedvesu.nyc.dom.my.id/api/products').then(data => data.data);
-    const { data, error, isLoading } = useSWR('https://wedvesu.nyc.dom.my.id/api/products', fetcher);
+    const fetcher = () => axiosClient('http://localhost:8080/api/products').then(data => data.data);
+    const { data, error, isLoading } = useSWR('http://localhost:8080/api/products', fetcher);
 
     if (error) return <div>failed to load</div>;
     if(isLoading) return <Loading />;

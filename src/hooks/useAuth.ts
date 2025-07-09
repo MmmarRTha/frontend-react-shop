@@ -15,7 +15,7 @@ export const useAuth = (middleware : string, url: string) => {
     const navigate = useNavigate();
 
     const {data: user, error, mutate} = useSWR('/api/user', () =>
-        axiosClient('https://wedvesu.nyc.dom.my.id/api/user', {
+        axiosClient('http://localhost:8080/api/user', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -28,7 +28,7 @@ export const useAuth = (middleware : string, url: string) => {
 
     const login = async (loginData: LoginDataProps, setErrors: (arg0: unknown[]) => void) => {
         try {
-            const {data} = await axiosClient.post('https://wedvesu.nyc.dom.my.id/api/login', loginData);
+            const {data} = await axiosClient.post('http://localhost:8080/api/login', loginData);
             localStorage.setItem('AUTH_TOKEN', data.token);
             setErrors([]);
             await mutate();
@@ -39,7 +39,7 @@ export const useAuth = (middleware : string, url: string) => {
 
     const register = async (registerData: User, setErrors: (arg0: unknown[]) => void) => {
         try {
-            const {data} = await axiosClient.post('https://wedvesu.nyc.dom.my.id/api/register', registerData);
+            const {data} = await axiosClient.post('http://localhost:8080/api/register', registerData);
             localStorage.setItem('AUTH_TOKEN', data.token);
             setErrors([]);
             await mutate();
@@ -50,7 +50,7 @@ export const useAuth = (middleware : string, url: string) => {
 
     const logout = async () => {
         try {
-            await axiosClient.post('https://wedvesu.nyc.dom.my.id/api/logout', null, {
+            await axiosClient.post('http://localhost:8080/api/logout', null, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
